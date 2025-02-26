@@ -1,5 +1,5 @@
 [versions]
-agp = "8.7.3"
+agp = "8.8.2"
 kotlin = "2.1.10"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -13,6 +13,7 @@ hilt = "2.55"
 ksp = "2.1.10-1.0.30"
 ktor = "2.3.6"
 coil = "2.6.0"
+uiTextGoogleFonts = "1.7.8"
 
 
 [libraries]
@@ -41,6 +42,7 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

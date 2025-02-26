@@ -2,8 +2,8 @@ package com.ptk.healthflow.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -16,39 +16,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ptk.healthflow.R
 
 @Composable
-fun HeartRateCard(
-    title: String,
-    value: String,
-    image: Int, backgroundColor: Color,
-    modifier: Modifier
-) {
+fun InfoCard(title: String, description: String, backgroundColor: Color, modifier: Modifier) {
     Card(
         shape = RoundedCornerShape(32.dp),
         colors = CardDefaults.cardColors(containerColor = backgroundColor),
-        modifier = modifier
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 title,
-                fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
-            )
-            Text(
-                value,
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onPrimary
+                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                color = MaterialTheme.colorScheme.onSecondary
             )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                description,
+                fontSize = MaterialTheme.typography.titleSmall.fontSize,
+                color = MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.8f)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
             Image(
-                painter = painterResource(image),
-                contentDescription = "HeartRate Image"
+                painter = painterResource(R.drawable.news),
+                contentDescription = "Health News Image"
             )
         }
     }
