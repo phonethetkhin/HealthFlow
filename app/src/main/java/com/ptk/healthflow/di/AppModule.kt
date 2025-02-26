@@ -1,6 +1,7 @@
 package com.ptk.healthflow.di
 
 import android.util.Log
+import com.ptk.healthflow.data.repository.HealthRepositoryImpl
 import com.ptk.healthflow.domain.repository.HealthRepository
 import dagger.Module
 import dagger.Provides
@@ -29,14 +30,12 @@ object AppModule {
             level = LogLevel.BODY
         }
         install(ContentNegotiation) {
-            json(
-                Json {
-                    isLenient = false
-                    ignoreUnknownKeys = true
-                    allowSpecialFloatingPointValues = true
-                    useArrayPolymorphism = false
-                }
-            )
+            json(Json {
+                isLenient = false
+                ignoreUnknownKeys = true
+                allowSpecialFloatingPointValues = true
+                useArrayPolymorphism = false
+            })
         }
         // Timeout Plugin for setting various timeouts
         install(HttpTimeout) {
@@ -54,5 +53,5 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHealthRepository(healthRepository: ) =
+    fun provideHealthRepository(healthRepository: HealthRepositoryImpl) : HealthRepository= healthRepository
 }

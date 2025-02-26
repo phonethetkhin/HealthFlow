@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ptk.healthflow.domain.model.HeartRate
 import com.ptk.healthflow.domain.model.Temperature
-import com.ptk.healthflow.domain.usecase.GetHeartRateUseCase
-import com.ptk.healthflow.domain.usecase.GetTemperatureUseCase
+import com.ptk.healthflow.domain.usecase.GetMeasureUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HealthViewModel @Inject constructor(
-    private val getHeartRateUseCase: GetHeartRateUseCase,
-    private val getTemperatureUseCase: GetTemperatureUseCase
+    private val getMeasureUseCase: GetMeasureUseCase,
 ) : ViewModel() {
 
     private val _heartRate = MutableStateFlow<HeartRate?>(null)
@@ -30,8 +28,7 @@ class HealthViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            _heartRate.value = getHeartRateUseCase()
-            _temperature.value = getTemperatureUseCase()
+//            _heartRate.value = getMeasureUseCase()
         }
     }
 }

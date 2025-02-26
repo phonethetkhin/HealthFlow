@@ -1,3 +1,4 @@
+package com.ptk.healthflow.presentation.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,23 +13,9 @@ import androidx.compose.ui.unit.sp
 import com.ptk.healthflow.domain.model.HeartRate
 import com.ptk.healthflow.domain.model.Temperature
 
-@Composable
-fun TemperatureCard(temperature: Temperature) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.Blue)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Temperature: ${temperature.value}°C", fontSize = 18.sp)
-            Text(text = "Status: ${temperature.status}", fontSize = 16.sp)
-        }
-    }
-}
 
 @Composable
-fun HeartRateCard(heartRate: HeartRate) {
+fun HeartRateCard(heartRate: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,8 +23,8 @@ fun HeartRateCard(heartRate: HeartRate) {
         colors = CardDefaults.cardColors(containerColor = Color.Red)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Heart Rate: ${heartRate.bpm} BPM", fontSize = 18.sp)
-            Text(text = "Zone: ${heartRate.zone}", fontSize = 16.sp)
+            Text(text = "Heart Rate: ${heartRate} BPM", fontSize = 18.sp)
+            Text(text = "Zone: ${heartRate}", fontSize = 16.sp)
         }
     }
 }

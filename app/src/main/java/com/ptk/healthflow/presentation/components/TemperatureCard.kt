@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.sp
 import com.ptk.healthflow.domain.model.Temperature
 
 @Composable
-private fun TemperatureCard(temperature: Temperature) {
+fun TemperatureCard(temperature: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -22,8 +22,8 @@ private fun TemperatureCard(temperature: Temperature) {
         colors = CardDefaults.cardColors(containerColor = Color.Blue)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Temperature: ${temperature.value}°C", fontSize = 18.sp)
-            Text(text = "Status: ${temperature.status}", fontSize = 16.sp)
+            Text(text = "Temperature: ${temperature}°C", fontSize = 18.sp)
+            Text(text = "Status: ${temperature}", fontSize = 16.sp)
         }
     }
 }

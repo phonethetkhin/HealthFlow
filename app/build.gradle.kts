@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp) // Apply KSP plugin
     alias(libs.plugins.hilt)  // Hilt plugin from version catalog
-    alias(libs.plugins.kotlin.serialization)  // Apply the Kotlin Serialization plugin from version catalog
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.compose)  // Apply the Kotlin Serialization plugin from version catalog
 }
 
 android {
@@ -51,6 +52,7 @@ android {
         }
     }
 }
+
 hilt{
     enableAggregatingTask = false
 }
@@ -90,4 +92,9 @@ dependencies {
     implementation(libs.coil.compose)
 
 
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }

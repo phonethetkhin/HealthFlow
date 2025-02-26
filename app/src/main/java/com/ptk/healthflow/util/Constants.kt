@@ -1,5 +1,5 @@
 package com.ptk.healthflow.util
 
 object Constants {
-    val BASEURL = "https://wbsapi.withings.net/"
+    const val BASEURL = "https://wbsapi.withings.net/"
 }
