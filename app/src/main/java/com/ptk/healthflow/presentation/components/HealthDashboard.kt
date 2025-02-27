@@ -13,12 +13,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.ptk.healthflow.R
 
@@ -40,15 +40,20 @@ fun HealthDashboard(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(2f)
-                    .padding(16.dp)
+                    .weight(1f)
             ) {
                 InfoCard(
                     title = "Why People live longer?",
-                    description = "Do you know why people live longer than usual? According to..",
+                    description = "Do you know why people live longer than usual? According to..asdfasdfasdfjlajsdfkjalsjdflkajdlsfa;dfadfjaldjalsdjfakldjsflkjsdlfalkdjflkasdjfklajsdklfjalskdjflaksdjfklj",
                     backgroundColor = MaterialTheme.colorScheme.primary,
                 )
             }
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding(top = 8.dp, bottom = 8.dp)
+                    .height(2.dp),
+                color = MaterialTheme.colorScheme.primary
+            )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -60,15 +65,20 @@ fun HealthDashboard(modifier: Modifier = Modifier) {
                     value = "137 BPM",
                     image = R.drawable.heart,
                     backgroundColor = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.fillMaxHeight().weight(1f),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f),
                     isHeartRate = true
                 )
                 TempCard(
-                    value ="30 °C",
+                    value = "30 °C",
                     hasFever = true,
-                    modifier = Modifier.fillMaxHeight().weight(1f),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f),
                 )
             }
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -78,11 +88,15 @@ fun HealthDashboard(modifier: Modifier = Modifier) {
                 BloodPressureCard(
                     value = "120",
                     value2 = "90",
-                    modifier = Modifier.fillMaxHeight().weight(1f),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f),
                 )
                 HeartRateCard(
                     "Oxygen", "99 %", R.drawable.oxygen, MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.fillMaxHeight().weight(1f),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f),
                 )
             }
         }
