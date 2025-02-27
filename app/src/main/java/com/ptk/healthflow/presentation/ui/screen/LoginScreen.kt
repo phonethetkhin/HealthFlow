@@ -1,9 +1,91 @@
 package com.ptk.healthflow.presentation.ui.screen
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.ptk.healthflow.R
+import com.ptk.healthflow.presentation.ui.navigation.Screen
+import com.ptk.healthflow.presentation.viewmodel.LoginViewModel
+import com.ptk.healthflow.util.GlobalEvent
+import com.ptk.healthflow.util.GlobalEventBus
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(
+    navController: NavController,
+    loginViewModel: LoginViewModel = hiltViewModel(),
+) {
+    LaunchedEffect(Unit) {
+        GlobalEventBus.eventFlow.collect { event ->
+            when (event) {
+                is GlobalEvent.NavigateHome -> {
+                    navController.navigate(Screen.HomeScreen.route) {
+                        popUpTo(Screen.LoginScreen.route) { inclusive = true }
+                    }
+                }
 
+                is GlobalEvent.ShowError -> {}
+                GlobalEvent.ShowToast -> {}
+            }
+        }
+    }
+    LoginScreenContent(loginViewModel)
+}
+
+@Composable
+fun LoginScreenContent(loginViewModel: LoginViewModel, modifier: Modifier = Modifier) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Welcome Back!",
+            style = MaterialTheme.typography.headlineLarge,
+            textAlign = TextAlign.Center
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Image(
+            painter = painterResource(id = R.drawable.health_flow_logo),
+            contentDescription = "App Logo",
+            modifier = Modifier
+                .size(300.dp)
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+        val context = LocalContext.current
+
+        Button(
+            onClick = {
+                loginViewModel.redirectToWithings(context)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+        ) {
+            Text(text = "Login To Withings")
+        }
+    }
 }

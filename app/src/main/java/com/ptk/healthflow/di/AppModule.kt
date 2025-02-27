@@ -3,8 +3,8 @@ package com.ptk.healthflow.di
 import android.app.Application
 import android.util.Log
 import com.ptk.healthflow.data.local.HealthFlowDataStore
-import com.ptk.healthflow.data.repository.HealthRepositoryImpl
-import com.ptk.healthflow.domain.repository.HealthRepository
+import com.ptk.healthflow.data.repository.HomeRepositoryImpl
+import com.ptk.healthflow.domain.repository.HomeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,7 +55,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHealthRepository(healthRepository: HealthRepositoryImpl): HealthRepository =
+    fun provideHealthRepository(healthRepository: HomeRepositoryImpl): HomeRepository =
         healthRepository
 
 

@@ -65,18 +65,20 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = hiltViewModel(), onCon
                 value = firstName,
                 onValueChange = { firstName = it },
                 trailingIcon = {
-                    IconButton(
-                        onClick = { firstName = "" },
-                        modifier = Modifier
-                            .size(25.dp)
-                            .background(MaterialTheme.colorScheme.error, shape = CircleShape)
-                            .padding(4.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_close_24),
-                            contentDescription = "Close icon",
-                            tint = MaterialTheme.colorScheme.surface
-                        )
+                    if (firstName.isNotBlank()) {
+                        IconButton(
+                            onClick = { firstName = "" },
+                            modifier = Modifier
+                                .size(25.dp)
+                                .background(MaterialTheme.colorScheme.error, shape = CircleShape)
+                                .padding(4.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_close_24),
+                                contentDescription = "Close icon",
+                                tint = MaterialTheme.colorScheme.surface
+                            )
+                        }
                     }
                 },
                 label = { Text("Enter First Name") },
@@ -91,18 +93,23 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = hiltViewModel(), onCon
                 value = lastName,
                 onValueChange = { lastName = it },
                 trailingIcon = {
-                    IconButton(
-                        onClick = { lastName = "" },
-                        modifier = Modifier
-                            .size(25.dp)
-                            .background(MaterialTheme.colorScheme.error, shape = CircleShape)
-                            .padding(4.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_close_24),
-                            contentDescription = "Close icon",
-                            tint = MaterialTheme.colorScheme.surface
-                        )
+                    if (lastName.isNotBlank()) {
+                        IconButton(
+                            onClick = { lastName = "" },
+                            modifier = Modifier
+                                .size(25.dp)
+                                .background(
+                                    MaterialTheme.colorScheme.error,
+                                    shape = CircleShape
+                                )
+                                .padding(4.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_close_24),
+                                contentDescription = "Close icon",
+                                tint = MaterialTheme.colorScheme.surface
+                            )
+                        }
                     }
                 },
                 label = { Text("Enter Last Name") },
@@ -115,7 +122,8 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = hiltViewModel(), onCon
         }
 
         Button(
-            onClick = { registerViewModel.saveUserInfo(firstName, lastName, onContinue) },
+            onClick =
+            { registerViewModel.saveUserInfo(firstName, lastName, onContinue) },
             modifier = Modifier
                 .fillMaxWidth()
                 .defaultMinSize(100.dp, 50.dp),

@@ -1,9 +1,9 @@
 package com.ptk.healthflow.presentation.ui.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -20,7 +20,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun HeartRateCard(
@@ -28,7 +27,7 @@ fun HeartRateCard(
     value: String,
     image: Int, backgroundColor: Color,
     modifier: Modifier = Modifier,
-    isHeartRate : Boolean = false
+    isHeartRate: Boolean = false
 ) {
     Card(
         shape = RoundedCornerShape(32.dp),
@@ -37,9 +36,10 @@ fun HeartRateCard(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Text(
                 title,
@@ -52,7 +52,7 @@ fun HeartRateCard(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimary
             )
-            if(isHeartRate) {
+            if (isHeartRate) {
                 Button(
                     modifier = Modifier,
                     colors = ButtonDefaults.buttonColors()

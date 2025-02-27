@@ -23,47 +23,47 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ptk.healthflow.R
 
-@Composable
-fun InfoCard(
-    title: String,
-    description: String,
-    backgroundColor: Color,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier
-            .fillMaxHeight(),
-        shape = RoundedCornerShape(32.dp),
-        colors = CardDefaults.cardColors(containerColor = backgroundColor),
-    ) {
-        Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                title,
-                fontWeight = FontWeight.Bold,
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                color = MaterialTheme.colorScheme.onPrimary,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp, start = 8.dp, end = 8.dp)
-            )
-            Text(
-                description,
-                fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Image(
-                painter = painterResource(R.drawable.news),
-                contentDescription = "Health News Image"
-            )
-        }
-    }
-}
+//@Composable
+//fun InfoCard(
+//    title: String,
+//    description: String,
+//    backgroundColor: Color,
+//    modifier: Modifier = Modifier
+//) {
+//    Card(
+//        modifier = modifier
+//            .fillMaxHeight(),
+//        shape = RoundedCornerShape(32.dp),
+//        colors = CardDefaults.cardColors(containerColor = backgroundColor),
+//    ) {
+//        Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+//            Text(
+//                title,
+//                fontWeight = FontWeight.Bold,
+//                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+//                color = MaterialTheme.colorScheme.onPrimary,
+//                maxLines = 2,
+//                overflow = TextOverflow.Ellipsis,
+//                textAlign = TextAlign.Center,
+//                modifier = modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 8.dp, start = 8.dp, end = 8.dp)
+//            )
+//            Text(
+//                description,
+//                fontSize = MaterialTheme.typography.titleSmall.fontSize,
+//                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
+//                maxLines = 2,
+//                overflow = TextOverflow.Ellipsis,
+//                modifier = modifier
+//                    .fillMaxWidth()
+//                    .padding(8.dp)
+//            )
+//            Spacer(modifier = Modifier.height(8.dp))
+//            Image(
+//                painter = painterResource(R.drawable.news),
+//                contentDescription = "Health News Image"
+//            )
+//        }
+//    }
+//}
