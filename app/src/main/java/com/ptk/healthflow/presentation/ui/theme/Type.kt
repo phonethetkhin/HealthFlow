@@ -1,4 +1,4 @@
-package com.ptk.healthflow.ui.theme
+package com.ptk.healthflow.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.FontFamily

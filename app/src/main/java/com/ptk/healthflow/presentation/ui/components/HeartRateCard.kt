@@ -1,4 +1,4 @@
-package com.ptk.healthflow.presentation.components
+package com.ptk.healthflow.presentation.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

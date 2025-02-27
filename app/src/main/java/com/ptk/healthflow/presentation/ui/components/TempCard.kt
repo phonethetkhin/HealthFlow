@@ -1,41 +1,38 @@
-package com.ptk.healthflow.presentation.components
+package com.ptk.healthflow.presentation.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ptk.healthflow.R
 
 @Composable
-fun BloodPressureCard(
-    value: String,
-    value2: String,
-    modifier: Modifier = Modifier
-) {
+fun TempCard(value: String, hasFever: Boolean = false, modifier: Modifier = Modifier) {
     Card(
         shape = RoundedCornerShape(32.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.error),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiary),
         modifier = modifier
     ) {
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -48,47 +45,42 @@ fun BloodPressureCard(
                     .fillMaxHeight()
                     .weight(1.5F),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                if (hasFever) {
+                    Button(
+                        modifier = Modifier,
+                        colors = ButtonDefaults.buttonColors()
+                            .copy(containerColor = MaterialTheme.colorScheme.error),
+                        onClick = {}) {
+                        Text(
+                            text = "Fever",
+                            color = MaterialTheme.colorScheme.onError,
+                            fontWeight = MaterialTheme.typography.titleSmall.fontWeight,
+                            fontSize = MaterialTheme.typography.titleSmall.fontSize,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
                 Text(
                     "Temperature",
                     fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                    color = MaterialTheme.colorScheme.onError.copy(alpha = 0.8f)
+                    color = MaterialTheme.colorScheme.onTertiary.copy(alpha = 0.8f)
                 )
-                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     value,
                     fontSize = MaterialTheme.typography.titleLarge.fontSize,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onError
+                    color = MaterialTheme.colorScheme.onTertiary
                 )
-                HorizontalDivider(
-                    modifier = Modifier
-                        .height(2.dp)
-                        .width(50.dp),
-                    color = MaterialTheme.colorScheme.onError
-                )
-                Text(
-                    value2,
-                    fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onError
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    "mmhg",
-                    fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                    color = MaterialTheme.colorScheme.onError.copy(alpha = 0.8f)
-                )
+
             }
             Image(
                 modifier = Modifier
-                    .fillMaxHeight()
                     .weight(1F),
-                painter = painterResource(R.drawable.pressure),
+                painter = painterResource(R.drawable.temp),
                 contentDescription = "HeartRate Image"
             )
         }
-
     }
 }

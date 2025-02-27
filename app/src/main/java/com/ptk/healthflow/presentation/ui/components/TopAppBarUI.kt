@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.ptk.healthflow.presentation.components
+package com.ptk.healthflow.presentation.ui.components
 
 import android.content.Context
 import androidx.compose.material3.ExperimentalMaterial3Api

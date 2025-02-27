@@ -1,6 +1,8 @@
 package com.ptk.healthflow.di
 
+import android.app.Application
 import android.util.Log
+import com.ptk.healthflow.data.local.HealthFlowDataStore
 import com.ptk.healthflow.data.repository.HealthRepositoryImpl
 import com.ptk.healthflow.domain.repository.HealthRepository
 import dagger.Module
@@ -53,5 +55,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHealthRepository(healthRepository: HealthRepositoryImpl) : HealthRepository= healthRepository
+    fun provideHealthRepository(healthRepository: HealthRepositoryImpl): HealthRepository =
+        healthRepository
+
+
+        @Singleton
+        @Provides
+        fun providesDataStore(application: Application) =
+            HealthFlowDataStore(application)
+
 }

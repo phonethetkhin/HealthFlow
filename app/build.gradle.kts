@@ -87,10 +87,14 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.logging)
     implementation(libs.kotlinx.serialization.json)  // Kotlin Serialization
+    implementation(libs.accompanist.pager)
 
 
     // Coil (Image Loading)
     implementation(libs.coil.compose)
+
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.datastore.preferences)
 
 
 }

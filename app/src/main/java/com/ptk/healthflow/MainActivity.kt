@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.ptk.healthflow.presentation.screen.HomeScreen
-import com.ptk.healthflow.ui.theme.HealthFlowTheme
+import com.ptk.healthflow.presentation.ui.navigation.AppNavigation
+import com.ptk.healthflow.presentation.ui.screen.HomeScreen
+import com.ptk.healthflow.presentation.ui.screen.OnboardingScreen
+import com.ptk.healthflow.presentation.ui.theme.HealthFlowTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,7 +18,7 @@ class MainActivity : ComponentActivity() {
         handleDeepLink(intent)
         setContent {
             HealthFlowTheme {
-                HomeScreen()
+                AppNavigation()
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.ptk.healthflow.presentation.screen
+package com.ptk.healthflow.presentation.ui.screen
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
@@ -21,11 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ptk.healthflow.R
-import com.ptk.healthflow.presentation.components.BloodPressureCard
-import com.ptk.healthflow.presentation.components.HeartRateCard
-import com.ptk.healthflow.presentation.components.TempCard
-import com.ptk.healthflow.presentation.components.TopAppBarUI
-import com.ptk.healthflow.presentation.components.TopSection
+import com.ptk.healthflow.presentation.ui.components.BloodPressureCard
+import com.ptk.healthflow.presentation.ui.components.HeartRateCard
+import com.ptk.healthflow.presentation.ui.components.TempCard
+import com.ptk.healthflow.presentation.ui.components.TopAppBarUI
+import com.ptk.healthflow.presentation.ui.components.TopSection
 import com.ptk.healthflow.presentation.viewmodel.HomeViewModel
 
 @Composable
