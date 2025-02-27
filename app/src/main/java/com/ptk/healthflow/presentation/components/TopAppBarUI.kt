@@ -2,28 +2,21 @@
 
 package com.ptk.healthflow.presentation.components
 
+import android.content.Context
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import com.ptk.healthflow.R
 
 @Composable
-fun TopAppBarUI() {
+fun TopAppBarUI(openLoginWithings: (Context) -> Unit) {
+    val context = LocalContext.current
     TopAppBar(
-        title = {
-            Text(
-                "Hey, Thomas",
-                fontWeight = FontWeight.Bold,
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-        },
+        title = {},
         navigationIcon = {
             IconButton(onClick = { /* TODO */ }) {
                 Icon(
@@ -33,7 +26,9 @@ fun TopAppBarUI() {
             }
         },
         actions = {
-            IconButton(onClick = { /* TODO */ }) {
+            IconButton(onClick = {
+                openLoginWithings(context)
+            }) {
                 Icon(
                     painter = painterResource(id = R.drawable.notification),
                     contentDescription = "Notifications"
