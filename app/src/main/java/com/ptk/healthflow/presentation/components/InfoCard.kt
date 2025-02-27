@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.ptk.healthflow.R
 
 @Composable
-fun InfoCard(title: String, description: String, backgroundColor: Color, modifier: Modifier) {
+fun InfoCard(title: String, description: String, backgroundColor: Color, modifier: Modifier = Modifier) {
     Card(
         shape = RoundedCornerShape(32.dp),
         colors = CardDefaults.cardColors(containerColor = backgroundColor),

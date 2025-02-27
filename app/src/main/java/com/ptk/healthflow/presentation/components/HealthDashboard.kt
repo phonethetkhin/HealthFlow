@@ -3,9 +3,11 @@
 package com.ptk.healthflow.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,11 +23,11 @@ import androidx.compose.ui.unit.dp
 import com.ptk.healthflow.R
 
 @Composable
-fun HealthDashboard() {
+fun HealthDashboard(modifier: Modifier = Modifier) {
     Scaffold(
         topBar = { TopAppBarUI() },
         containerColor = MaterialTheme.colorScheme.surface,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -35,49 +37,52 @@ fun HealthDashboard() {
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
-            InfoCard(
-                title = "Why People live longer?",
-                description = "Do you know why people live longer than usual? According to..",
-                backgroundColor = MaterialTheme.colorScheme.secondary,
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .weight(2f)
                     .padding(16.dp)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                HeartRateCard(
-                    "Heart Rate",
-                    "137 BPM",
-                    R.drawable.heart,
-                    MaterialTheme.colorScheme.secondary,
-                    Modifier.weight(1f)
-                )
-                HeartRateCard(
-                    "Temperature",
-                    "30 °C",
-                    R.drawable.temp,
-                    Color.Red,
-                    Modifier.weight(1f)
+                InfoCard(
+                    title = "Why People live longer?",
+                    description = "Do you know why people live longer than usual? According to..",
+                    backgroundColor = MaterialTheme.colorScheme.primary,
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1F),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 HeartRateCard(
-                    "Blood Pressure",
-                    "120\n90 mmhg",
-                    R.drawable.blood_pressure,
-                    Color.Red,
-                    Modifier.weight(1f)
+                    title = "Heart Rate",
+                    value = "137 BPM",
+                    image = R.drawable.heart,
+                    backgroundColor = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.fillMaxHeight().weight(1f),
+                    isHeartRate = true
+                )
+                TempCard(
+                    value ="30 °C",
+                    hasFever = true,
+                    modifier = Modifier.fillMaxHeight().weight(1f),
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1F),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                BloodPressureCard(
+                    value = "120",
+                    value2 = "90",
+                    modifier = Modifier.fillMaxHeight().weight(1f),
                 )
                 HeartRateCard(
                     "Oxygen", "99 %", R.drawable.oxygen, MaterialTheme.colorScheme.primary,
-                    Modifier.weight(1f),
+                    modifier = Modifier.fillMaxHeight().weight(1f),
                 )
             }
         }
