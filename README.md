@@ -4,7 +4,7 @@ Used Withings API.
 
 Need to download withing app and add health data manually. And then, login with gmail to withings and can access the data.
 
-APK Link => https://drive.google.com/file/d/1UjmApzsnm7MBAqS39upcB_rvjfdFsAiY/view?usp=sharing
+APK Link => https://drive.google.com/file/d/1AoomritSI-DUuKtIfteZtEI7W17ccCMK/view?usp=share_link
 
 [![temp-Image-NDMepp.avif](https://i.postimg.cc/tTsbtcfY/temp-Image-NDMepp.avif)](https://postimg.cc/2bNgC0CD)
 
