@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.AlertDialog
@@ -61,13 +63,14 @@ fun InfoDialog(
         title = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .fillMaxWidth()
             ) {
                 Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.TopEnd
                 ) {
-                    Log.e("testASDF", lastSyncTime.toString())
                     val time = formatTimestamp(lastSyncTime.toLong())
                     Text(
                         text = "Last Sync: $time",
@@ -98,7 +101,7 @@ fun InfoDialog(
         },
         text = {
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -137,7 +140,7 @@ fun HealthDataItem(label: String, value: String) {
             .padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = label, fontWeight = FontWeight.SemiBold)
+        Text(text = label, fontWeight = FontWeight.SemiBold, color = Color.Black)
         Text(text = value, fontWeight = FontWeight.Bold, color = Color(0xFF4CAF50))
     }
 }

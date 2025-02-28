@@ -27,9 +27,6 @@ class LoginViewModel @Inject constructor(
     private val redirectToWithingsUseCase: RedirectToWithingsUseCase
 ) : ViewModel() {
 
-    init {
-        Log.e("testASDF", "init")
-    }
 
     val _uiStates = MutableStateFlow(LoginUIStates())
     val uiStates = _uiStates.asStateFlow()

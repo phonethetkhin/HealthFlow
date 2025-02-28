@@ -2,6 +2,7 @@ package com.ptk.healthflow.presentation.ui.screen
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -110,7 +113,9 @@ fun LoginScreen(
 fun LoginScreenContent(loginViewModel: LoginViewModel, modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
+            .verticalScroll(rememberScrollState())
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -118,6 +123,7 @@ fun LoginScreenContent(loginViewModel: LoginViewModel, modifier: Modifier = Modi
         Text(
             text = "Welcome Back!",
             style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center
         )
 
@@ -141,7 +147,7 @@ fun LoginScreenContent(loginViewModel: LoginViewModel, modifier: Modifier = Modi
                 .fillMaxWidth()
                 .height(50.dp)
         ) {
-            Text(text = "Login To Withings")
+            Text(text = "Login To Withings", color = MaterialTheme.colorScheme.onPrimary)
         }
     }
 }
