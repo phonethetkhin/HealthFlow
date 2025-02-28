@@ -36,7 +36,7 @@ fun DrawerHeader(profileImage: Painter, userName: String) {
             modifier = Modifier
                 .size(80.dp)
                 .clip(CircleShape)
-                .border(2.dp, Color.White, CircleShape),
+                .border(2.dp, MaterialTheme.colorScheme.onPrimary, CircleShape),
             contentScale = ContentScale.Crop
         )
 
@@ -44,7 +44,7 @@ fun DrawerHeader(profileImage: Painter, userName: String) {
 
         Text(
             text = userName,
-            style = MaterialTheme.typography.headlineSmall.copy(color = Color.White)
+            style = MaterialTheme.typography.headlineSmall.copy(color = MaterialTheme.colorScheme.onPrimary)
         )
     }
 }
