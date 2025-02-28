@@ -44,10 +44,8 @@ class ApiServiceImpl @Inject constructor(
         url("https://wbsapi.withings.net/measure")
         header(HttpHeaders.Authorization, "Bearer $accessToken")
         parameter("action", "getmeas")
-        parameter("meastypes", "9")
+        parameter("meastypes", "9,10,11,12,54")
         parameter("category", 1)
-        parameter("startdate", 1664582400)
-        parameter("enddate", 1667231999)
 
     }.body()
 

@@ -1,7 +1,6 @@
 package com.ptk.healthflow.presentation.ui.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,16 +17,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.ptk.healthflow.R
+import com.ptk.healthflow.domain.model.FeverType
 
 @Composable
-fun TempCard(value: String, hasFever: Boolean = false, modifier: Modifier = Modifier) {
+fun TempCard(value: String, feverType: FeverType, modifier: Modifier = Modifier) {
     Card(
         shape = RoundedCornerShape(32.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiary),
@@ -47,7 +45,8 @@ fun TempCard(value: String, hasFever: Boolean = false, modifier: Modifier = Modi
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (hasFever) {
+
+                if (feverType == FeverType.HIGH_FEVER || feverType == FeverType.MILD_FEVER) {
                     Button(
                         modifier = Modifier,
                         colors = ButtonDefaults.buttonColors()
@@ -77,6 +76,7 @@ fun TempCard(value: String, hasFever: Boolean = false, modifier: Modifier = Modi
             }
             Image(
                 modifier = Modifier
+                    .fillMaxHeight()
                     .weight(1F),
                 painter = painterResource(R.drawable.temp),
                 contentDescription = "HeartRate Image"

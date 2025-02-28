@@ -20,18 +20,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.ptk.healthflow.R
+import com.ptk.healthflow.domain.model.HeartBeatType
 
 @Composable
 fun HeartRateCard(
-    title: String,
     value: String,
-    image: Int, backgroundColor: Color,
     modifier: Modifier = Modifier,
-    isHeartRate: Boolean = false
+    heartBeatType: HeartBeatType = HeartBeatType.MODERATE,
 ) {
     Card(
         shape = RoundedCornerShape(32.dp),
-        colors = CardDefaults.cardColors(containerColor = backgroundColor),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary),
         modifier = modifier
     ) {
         Column(
@@ -42,7 +42,7 @@ fun HeartRateCard(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                title,
+                "Heart Rate",
                 fontSize = MaterialTheme.typography.titleSmall.fontSize,
                 color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
             )
@@ -52,23 +52,33 @@ fun HeartRateCard(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimary
             )
-            if (isHeartRate) {
-                Button(
-                    modifier = Modifier,
-                    colors = ButtonDefaults.buttonColors()
-                        .copy(containerColor = MaterialTheme.colorScheme.error),
-                    onClick = {}) {
-                    Text(
-                        text = "High",
-                        color = MaterialTheme.colorScheme.onError,
-                        fontWeight = MaterialTheme.typography.titleSmall.fontWeight,
-                        fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                        textAlign = TextAlign.Center
-                    )
-                }
+            val textValue = when (heartBeatType) {
+                HeartBeatType.RESTING -> "Resting"
+                HeartBeatType.MODERATE -> "Moderate"
+                HeartBeatType.HIGH -> "High"
             }
+            val color = when (heartBeatType) {
+                HeartBeatType.RESTING -> MaterialTheme.colorScheme.primary
+                HeartBeatType.MODERATE -> MaterialTheme.colorScheme.primary
+                HeartBeatType.HIGH -> MaterialTheme.colorScheme.error
+            }
+
+            Button(
+                modifier = Modifier,
+                colors = ButtonDefaults.buttonColors()
+                    .copy(containerColor = color),
+                onClick = {}) {
+                Text(
+                    text = textValue,
+                    color = MaterialTheme.colorScheme.onError,
+                    fontWeight = MaterialTheme.typography.titleSmall.fontWeight,
+                    fontSize = MaterialTheme.typography.titleSmall.fontSize,
+                    textAlign = TextAlign.Center
+                )
+            }
+
             Image(
-                painter = painterResource(image),
+                painter = painterResource(R.drawable.heart),
                 contentDescription = "HeartRate Image"
             )
         }

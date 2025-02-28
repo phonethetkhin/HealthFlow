@@ -14,6 +14,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,6 +24,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.ptk.healthflow.R
 import com.ptk.healthflow.presentation.ui.navigation.Screen
 import com.ptk.healthflow.presentation.viewmodel.LoginViewModel
@@ -33,19 +39,36 @@ fun LoginScreen(
     navController: NavController,
     loginViewModel: LoginViewModel = hiltViewModel(),
 ) {
+    val uiStates = loginViewModel.loadingState.collectAsState()
     LaunchedEffect(Unit) {
         GlobalEventBus.eventFlow.collect { event ->
             when (event) {
                 is GlobalEvent.NavigateHome -> {
+                    loginViewModel.updateLoadingState(false)
+
                     navController.navigate(Screen.HomeScreen.route) {
                         popUpTo(Screen.LoginScreen.route) { inclusive = true }
                     }
+                }
+
+                is GlobalEvent.Loading -> {
+                    loginViewModel.updateLoadingState(true)
                 }
 
                 is GlobalEvent.ShowError -> {}
                 GlobalEvent.ShowToast -> {}
             }
         }
+    }
+    if (uiStates.value) {
+        // Lottie Animation in the top right corner
+        val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading)) // Replace with your Lottie animation file
+        LottieAnimation(
+            composition = composition,
+            modifier = Modifier
+                .padding(8.dp), // Add padding if needed
+            iterations = LottieConstants.IterateForever
+        )
     }
     LoginScreenContent(loginViewModel)
 }

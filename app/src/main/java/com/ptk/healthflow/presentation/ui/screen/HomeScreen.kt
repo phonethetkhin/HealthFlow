@@ -21,10 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ptk.healthflow.R
 import com.ptk.healthflow.domain.model.HomeUIStates
 import com.ptk.healthflow.presentation.ui.components.BloodPressureCard
 import com.ptk.healthflow.presentation.ui.components.HeartRateCard
+import com.ptk.healthflow.presentation.ui.components.OxygenCard
 import com.ptk.healthflow.presentation.ui.components.TempCard
 import com.ptk.healthflow.presentation.ui.components.TopAppBarUI
 import com.ptk.healthflow.presentation.viewmodel.HomeViewModel
@@ -69,18 +69,15 @@ fun HealthScreenContent(uiStates: HomeUIStates, modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 HeartRateCard(
-                    title = "Heart Rate",
-                    value = "137 BPM",
-                    image = R.drawable.heart,
-                    backgroundColor = MaterialTheme.colorScheme.secondary,
+                    value = "${uiStates.heartRate} BPM",
+                    heartBeatType = uiStates.healthCondition,
                     modifier = Modifier
                         .fillMaxHeight()
                         .weight(1f),
-                    isHeartRate = true
                 )
                 TempCard(
-                    value = "30 °C",
-                    hasFever = true,
+                    value = "${uiStates.temperature} °C",
+                    feverType = uiStates.feverType,
                     modifier = Modifier
                         .fillMaxHeight()
                         .weight(1f),
@@ -94,14 +91,16 @@ fun HealthScreenContent(uiStates: HomeUIStates, modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 BloodPressureCard(
-                    value = "120",
-                    value2 = "90",
+                    value = "${uiStates.highBloodPressure}",
+                    value2 = "${uiStates.lowBloodPressure}",
+                    bloodPressureType = uiStates.bloodPressureType,
                     modifier = Modifier
                         .fillMaxHeight()
                         .weight(1f),
                 )
-                HeartRateCard(
-                    "Oxygen", "99 %", R.drawable.oxygen, MaterialTheme.colorScheme.primary,
+                OxygenCard(
+                    "${uiStates.oxygen} %",
+                    oxygenLevelType = uiStates.oxygenLevelType,
                     modifier = Modifier
                         .fillMaxHeight()
                         .weight(1f),
