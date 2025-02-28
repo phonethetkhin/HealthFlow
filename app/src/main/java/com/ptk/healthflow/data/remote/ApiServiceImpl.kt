@@ -20,23 +20,15 @@ class ApiServiceImpl @Inject constructor(
     private val client: HttpClient,
 ) : ApiService {
     override suspend fun login(
-        isRefreshToken: Boolean,
-        refreshToken: String?,
         authCode: String
     ): LoginResponseDto = client.post {
         url("${Constants.BASEURL}${APIRoutes.LOGIN}")
         parameter("action", "requesttoken")
         parameter("client_id", Constants.CLIENT_ID)
         parameter("client_secret", Constants.SECRET_KEY)
-        if (isRefreshToken && refreshToken != null) {
-            parameter("grant_type", "refresh_token")
-            parameter("refresh_token", refreshToken)
-        } else {
-            parameter("grant_type", "authorization_code")
-            parameter("code", authCode)
-            parameter("redirect_uri", "myapp://callback")
-        }
-
+        parameter("grant_type", "authorization_code")
+        parameter("code", authCode)
+        parameter("redirect_uri", "myapp://callback")
     }.body()
 
 

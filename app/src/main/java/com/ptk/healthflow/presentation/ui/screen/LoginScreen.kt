@@ -1,5 +1,6 @@
 package com.ptk.healthflow.presentation.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -39,11 +40,13 @@ fun LoginScreen(
     navController: NavController,
     loginViewModel: LoginViewModel = hiltViewModel(),
 ) {
-    val uiStates = loginViewModel.loadingState.collectAsState()
+    val uiStates by loginViewModel.uiStates.collectAsState()
     LaunchedEffect(Unit) {
         GlobalEventBus.eventFlow.collect { event ->
             when (event) {
                 is GlobalEvent.NavigateHome -> {
+                    Log.e("testASDF", "Sequence 11")
+
                     loginViewModel.updateLoadingState(false)
 
                     navController.navigate(Screen.HomeScreen.route) {
@@ -52,15 +55,17 @@ fun LoginScreen(
                 }
 
                 is GlobalEvent.Loading -> {
+                    Log.e("testASDF",uiStates.isLoading.toString())
+
                     loginViewModel.updateLoadingState(true)
                 }
 
-                is GlobalEvent.ShowError -> {}
-                GlobalEvent.ShowToast -> {}
+                else-> {}
             }
         }
     }
-    if (uiStates.value) {
+    Log.e("testASDF",uiStates.isLoading.toString())
+    if (uiStates.isLoading) {
         // Lottie Animation in the top right corner
         val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading)) // Replace with your Lottie animation file
         LottieAnimation(

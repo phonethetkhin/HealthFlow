@@ -7,8 +7,7 @@ import com.ptk.healthflow.data.remote.dto.MeasureDto
 interface ApiService {
 
     suspend fun login(
-        isRefreshToken: Boolean,
-        refreshToken: String?, authCode: String
+        authCode: String
     ): LoginResponseDto
 
     suspend fun fetchMeasure(accessToken: String): MeasureDto

@@ -2,6 +2,8 @@ package com.ptk.healthflow.presentation.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,8 +14,7 @@ import com.ptk.healthflow.presentation.ui.screen.RegisterScreen
 import kotlinx.coroutines.flow.first
 
 @Composable
-fun AppNavigation(startDestination: String) {
-    val navController = rememberNavController()
+fun AppNavigation(navController: NavHostController, startDestination: String) {
 
     NavHost(
         navController = navController,
@@ -41,7 +42,7 @@ fun AppNavigation(startDestination: String) {
         }
 
         composable(Screen.HomeScreen.route) {
-            HomeScreen()
+            HomeScreen(navController)
         }
     }
 }

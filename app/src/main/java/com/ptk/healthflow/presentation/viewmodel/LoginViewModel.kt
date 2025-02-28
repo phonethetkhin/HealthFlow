@@ -5,15 +5,18 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ptk.healthflow.data.local.HealthFlowDataStore
+import com.ptk.healthflow.domain.uistates.LoginUIStates
 import com.ptk.healthflow.domain.usecase.LoginToWithingsUseCase
 import com.ptk.healthflow.domain.usecase.RedirectToWithingsUseCase
 import com.ptk.healthflow.util.GlobalEvent
 import com.ptk.healthflow.util.GlobalEventBus
 import com.ptk.healthflow.util.TokenExpiredException
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,13 +27,18 @@ class LoginViewModel @Inject constructor(
     private val redirectToWithingsUseCase: RedirectToWithingsUseCase
 ) : ViewModel() {
 
-    private val _loadingState = MutableStateFlow(false) // Initial state is false (not loading)
+    init {
+        Log.e("testASDF", "init")
 
-    // Expose it as a StateFlow to observe in UI.
-    val loadingState: StateFlow<Boolean> = _loadingState
+    }
+
+    val _uiStates = MutableStateFlow(LoginUIStates())
+    val uiStates = _uiStates.asStateFlow()
 
     fun updateLoadingState(isLoading: Boolean) {
-        _loadingState.value = isLoading
+        Log.e("testASDF", "Update $isLoading")
+
+        _uiStates.update { it.copy(isLoading = isLoading) }
     }
 
     fun redirectToWithings(context: Context) {
@@ -40,33 +48,39 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun login(authCode: String, isRefreshToken: Boolean, context: Context) {
+    fun login(authCode: String) {
         Log.e("onLogin", "Login : $authCode")
-        GlobalEventBus.triggerEvent(GlobalEvent.Loading)
         viewModelScope.launch {
+            delay(1000L)
+            GlobalEventBus.triggerEvent(GlobalEvent.Loading)
+
             healthFlowDataStore.saveAuthCode(authCode)
             val response = loginToWithingsUseCase(
-                isRefreshToken,
-                healthFlowDataStore.refreshToken.first(),
                 healthFlowDataStore.authCode.first()!!
             )
             response.fold(
                 onSuccess = { data ->
+                    Log.e("testASDF", data.body.toString())
+                    // Save the access token and wait for it to be saved
                     data.body.accessToken?.let {
+                        Log.e("testASDF", "Sequence 1")
+
+                        healthFlowDataStore.saveIsTokenExpire(false)
+                        Log.e("testASDF", "Sequence 5")
+
                         healthFlowDataStore.saveAccessToken(data.body.accessToken)
+                        Log.e("testASDF", "Sequence 9")
+
+                        GlobalEventBus.triggerEvent(GlobalEvent.NavigateHome)
+                        Log.e("testASDF", "Sequence 10")
+
                     }
-                    data.body.refreshToken?.let {
-                        healthFlowDataStore.saveRefreshToken(data.body.refreshToken)
-                    }
-                    Log.e("onSuccess", "Data : ${data.body.accessToken}")
-                    GlobalEventBus.triggerEvent(GlobalEvent.NavigateHome)
+
                 },
                 onFailure = { error ->
-                    Log.e("onError", "Error : ${error.message}")
-
                     if (error is TokenExpiredException) {
                         healthFlowDataStore.saveIsTokenExpire(true)
-                        login(authCode, true, context)
+                        GlobalEventBus.triggerEvent(GlobalEvent.TokenExpired)
                     }
                 }
             )

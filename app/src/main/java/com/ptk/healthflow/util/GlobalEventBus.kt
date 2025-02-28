@@ -1,5 +1,6 @@
 package com.ptk.healthflow.util
 
+import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -10,6 +11,8 @@ object GlobalEventBus {
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun triggerEvent(event: GlobalEvent) {
+        Log.e("testASDF", "TriggerEvent $event")
+
         GlobalScope.launch {
             _eventFlow.emit(event)
         }

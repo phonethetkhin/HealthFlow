@@ -1,5 +1,6 @@
 package com.ptk.healthflow.data.repository
 
+import android.util.Log
 import com.ptk.healthflow.data.remote.ApiService
 import com.ptk.healthflow.data.remote.dto.LoginResponseDto
 import com.ptk.healthflow.data.remote.dto.MeasureDto
@@ -19,12 +20,10 @@ import javax.inject.Singleton
 class HomeRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : HomeRepository {
-    override suspend fun login(
-        isRefreshToken: Boolean,
-        refreshToken: String?, authCode: String
+    override suspend fun login(authCode: String
     ): Result<LoginResponseDto> {
         return try {
-            val response = apiService.login(isRefreshToken, refreshToken, authCode)
+            val response = apiService.login( authCode)
             Result.success(response)
         } catch (e: ClientRequestException) { // 4xx Errors
             if (e.response.status.value == 401 || e.response.status.value == 403) {
@@ -42,6 +41,7 @@ class HomeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMeasure(accessToken: String): Result<MeasureDto> {
+        Log.e("testASDF", "GetMesaureRepo $accessToken")
         return try {
             val response = apiService.fetchMeasure(accessToken)
             Result.success(response)

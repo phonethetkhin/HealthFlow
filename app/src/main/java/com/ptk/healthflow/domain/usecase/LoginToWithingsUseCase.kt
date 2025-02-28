@@ -8,9 +8,8 @@ class LoginToWithingsUseCase @Inject constructor(
     private val homeRepository: HomeRepository
 ) {
     suspend operator fun invoke(
-        isRefreshToken: Boolean,
-        refreshToken: String?, authCode: String
+         authCode: String
     ): Result<LoginResponseDto> {
-        return homeRepository.login(isRefreshToken, refreshToken, authCode)
+        return homeRepository.login(authCode)
     }
 }

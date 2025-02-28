@@ -2,10 +2,12 @@ package com.ptk.healthflow.data.local
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
@@ -22,8 +24,8 @@ class HealthFlowDataStore @Inject constructor(private val application: Applicati
         val FIRST_NAME = stringPreferencesKey("firstName")
         val LAST_NAME = stringPreferencesKey("lastName")
         val AUTH_CODE = stringPreferencesKey("authCode")
+        val TOTAL_NOTIFICATION_COUNT = intPreferencesKey("totalNotificationCount")
         val ACCESS_TOKEN = stringPreferencesKey("accessToken")
-        val REFRESH_TOKEN = stringPreferencesKey("refreshToken")
 
 
     }
@@ -43,8 +45,24 @@ class HealthFlowDataStore @Inject constructor(private val application: Applicati
     }
 
     suspend fun saveIsTokenExpire(isTokenExpire: Boolean) {
+        Log.e("testASDF", "Sequence 2")
+
         application.dataStore.edit { preferences ->
+            Log.e("testASDF", "Sequence 3")
+
             preferences[IS_TOKEN_EXPIRE] = isTokenExpire
+        }
+        Log.e("testASDF", "Sequence 4")
+
+    }
+
+    val totalNotificationCount: Flow<Int> = application.dataStore.data.map { preferences ->
+        preferences[TOTAL_NOTIFICATION_COUNT] ?: 0
+    }
+
+    suspend fun saveTotalNotificationCount(totalNotificationCount: Int) {
+        application.dataStore.edit { preferences ->
+            preferences[TOTAL_NOTIFICATION_COUNT] = totalNotificationCount
         }
     }
 
@@ -83,18 +101,15 @@ class HealthFlowDataStore @Inject constructor(private val application: Applicati
     }
 
     suspend fun saveAccessToken(accessToken: String) {
+        Log.e("testASDF", "Sequence 6")
+
         application.dataStore.edit { preferences ->
+            Log.e("testASDF", "Sequence 7")
+
             preferences[ACCESS_TOKEN] = accessToken
         }
+        Log.e("testASDF", "Sequence 8")
+
     }
 
-    val refreshToken: Flow<String?> = application.dataStore.data.map { preferences ->
-        preferences[REFRESH_TOKEN]
-    }
-
-    suspend fun saveRefreshToken(refreshToken: String) {
-        application.dataStore.edit { preferences ->
-            preferences[REFRESH_TOKEN] = refreshToken
-        }
-    }
 }
