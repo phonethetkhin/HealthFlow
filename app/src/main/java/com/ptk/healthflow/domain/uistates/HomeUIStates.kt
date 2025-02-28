@@ -17,8 +17,10 @@ data class HomeUIStates(
     var totalNotificationCount: Int = 0,
 
     var isShowDialog: Boolean = false,
-    var dialogTitle: String = "",
-    var dialogMessage: String = "",
+    var isShowErrorDialog: Boolean = false,
+    var isLoading: Boolean = false,
+    var errDialogTitle: String = "",
+    var errDialogMessage: String = "",
 
     var healthCondition: HeartBeatType = HeartBeatType.MODERATE,
     var feverType: FeverType = FeverType.NORMAL,

@@ -29,7 +29,6 @@ class LoginViewModel @Inject constructor(
 
     init {
         Log.e("testASDF", "init")
-
     }
 
     val _uiStates = MutableStateFlow(LoginUIStates())
@@ -41,6 +40,23 @@ class LoginViewModel @Inject constructor(
         _uiStates.update { it.copy(isLoading = isLoading) }
     }
 
+    fun toggleIsShowErrorDialog(isShowErrorDialog: Boolean) {
+        _uiStates.update {
+            it.copy(
+                isShowErrorDialog = isShowErrorDialog,
+                errDialogTitle = "Something Went Wrong"
+            )
+        }
+    }
+
+    fun setErrorMessage(errorMessage: String) {
+        _uiStates.update {
+            it.copy(
+                errDialogMessage = errorMessage
+            )
+        }
+    }
+
     fun redirectToWithings(context: Context) {
         Log.e("testASDF", "HEllo REDIRECT")
         viewModelScope.launch {
@@ -49,35 +65,32 @@ class LoginViewModel @Inject constructor(
     }
 
     fun login(authCode: String) {
-        Log.e("onLogin", "Login : $authCode")
         viewModelScope.launch {
             delay(1000L)
             GlobalEventBus.triggerEvent(GlobalEvent.Loading)
-
             healthFlowDataStore.saveAuthCode(authCode)
             val response = loginToWithingsUseCase(
                 healthFlowDataStore.authCode.first()!!
             )
             response.fold(
                 onSuccess = { data ->
-                    Log.e("testASDF", data.body.toString())
-                    // Save the access token and wait for it to be saved
-                    data.body.accessToken?.let {
-                        Log.e("testASDF", "Sequence 1")
-
+                    if (data.body.accessToken != null) {
                         healthFlowDataStore.saveIsTokenExpire(false)
-                        Log.e("testASDF", "Sequence 5")
-
                         healthFlowDataStore.saveAccessToken(data.body.accessToken)
-                        Log.e("testASDF", "Sequence 9")
-
+                        GlobalEventBus.triggerEvent(GlobalEvent.LoadingEnd)
                         GlobalEventBus.triggerEvent(GlobalEvent.NavigateHome)
-                        Log.e("testASDF", "Sequence 10")
+                    } else {
+                        GlobalEventBus.triggerEvent(GlobalEvent.LoadingEnd)
+                        GlobalEventBus.triggerEvent(GlobalEvent.ShowErrorDialog)
+                        GlobalEventBus.triggerEvent(GlobalEvent.SetErrorMessage("Access Token is null, need to login with withings."))
 
                     }
-
                 },
                 onFailure = { error ->
+                    GlobalEventBus.triggerEvent(GlobalEvent.SetErrorMessage(error.message.toString()))
+                    GlobalEventBus.triggerEvent(GlobalEvent.LoadingEnd)
+                    GlobalEventBus.triggerEvent(GlobalEvent.ShowErrorDialog)
+
                     if (error is TokenExpiredException) {
                         healthFlowDataStore.saveIsTokenExpire(true)
                         GlobalEventBus.triggerEvent(GlobalEvent.TokenExpired)

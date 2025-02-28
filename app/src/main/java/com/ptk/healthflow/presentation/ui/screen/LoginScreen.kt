@@ -30,6 +30,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.ptk.healthflow.R
+import com.ptk.healthflow.presentation.ui.components.ErrorDialog
 import com.ptk.healthflow.presentation.ui.navigation.Screen
 import com.ptk.healthflow.presentation.viewmodel.LoginViewModel
 import com.ptk.healthflow.util.GlobalEvent
@@ -40,7 +41,11 @@ fun LoginScreen(
     navController: NavController,
     loginViewModel: LoginViewModel = hiltViewModel(),
 ) {
+    Log.e("logINUISTATE", "LoginScreen ASdasdf!")
+
     val uiStates by loginViewModel.uiStates.collectAsState()
+    Log.e("logINUISTATE", "UISTSSCREEN $uiStates")
+
     LaunchedEffect(Unit) {
         GlobalEventBus.eventFlow.collect { event ->
             when (event) {
@@ -55,18 +60,31 @@ fun LoginScreen(
                 }
 
                 is GlobalEvent.Loading -> {
-                    Log.e("testASDF",uiStates.isLoading.toString())
-
                     loginViewModel.updateLoadingState(true)
                 }
 
-                else-> {}
+                is GlobalEvent.LoadingEnd -> {
+                    loginViewModel.updateLoadingState(false)
+                }
+
+                is GlobalEvent.ShowErrorDialog -> {
+                    loginViewModel.toggleIsShowErrorDialog(true)
+                }
+
+                is GlobalEvent.DismissErrorDialog -> {
+                    loginViewModel.toggleIsShowErrorDialog(false)
+                }
+
+                is GlobalEvent.SetErrorMessage -> {
+                    loginViewModel.setErrorMessage(event.message)
+                }
+
+                else -> {}
             }
         }
     }
-    Log.e("testASDF",uiStates.isLoading.toString())
+    Log.e("testASDF", "UISTATE" + uiStates.isLoading.toString())
     if (uiStates.isLoading) {
-        // Lottie Animation in the top right corner
         val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading)) // Replace with your Lottie animation file
         LottieAnimation(
             composition = composition,
@@ -74,6 +92,16 @@ fun LoginScreen(
                 .padding(8.dp), // Add padding if needed
             iterations = LottieConstants.IterateForever
         )
+    }
+    Log.e("testASDF", "ERROR DIA" + uiStates.isShowErrorDialog.toString())
+
+    if (uiStates.isShowErrorDialog) {
+        ErrorDialog(
+            title = uiStates.errDialogTitle,
+            message = uiStates.errDialogMessage
+        ) {
+            loginViewModel.toggleIsShowErrorDialog(false)
+        }
     }
     LoginScreenContent(loginViewModel)
 }

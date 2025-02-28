@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.ptk.healthflow.R
 
@@ -26,6 +27,8 @@ object NotificationUtils {
     }
 
     fun showHealthNotification(context: Context, title: String, message: String) {
+        Log.e("testASDF", "SEquence ShowNOti5")
+
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -39,5 +42,7 @@ object NotificationUtils {
             .build()
 
         notificationManager.notify(1, notification)
+        Log.e("testASDF", "SEquence ShowNOti6")
+
     }
 }

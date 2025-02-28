@@ -62,7 +62,7 @@ fun TempCard(value: String, feverType: FeverType, modifier: Modifier = Modifier)
                     }
                 }
                 Text(
-                    "Temperature",
+                    "Temp",
                     fontSize = MaterialTheme.typography.titleSmall.fontSize,
                     color = MaterialTheme.colorScheme.onTertiary.copy(alpha = 0.8f)
                 )

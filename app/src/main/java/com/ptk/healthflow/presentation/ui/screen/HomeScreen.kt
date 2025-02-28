@@ -1,7 +1,8 @@
 package com.ptk.healthflow.presentation.ui.screen
 
-import android.view.Menu
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,16 +24,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.ptk.healthflow.R
 import com.ptk.healthflow.domain.uistates.HomeUIStates
 import com.ptk.healthflow.presentation.ui.components.BloodPressureCard
 import com.ptk.healthflow.presentation.ui.components.DrawerContent
+import com.ptk.healthflow.presentation.ui.components.ErrorDialog
 import com.ptk.healthflow.presentation.ui.components.HeartRateCard
 import com.ptk.healthflow.presentation.ui.components.InfoDialog
 import com.ptk.healthflow.presentation.ui.components.OxygenCard
@@ -42,13 +48,11 @@ import com.ptk.healthflow.presentation.ui.navigation.Screen
 import com.ptk.healthflow.presentation.viewmodel.HomeViewModel
 import com.ptk.healthflow.util.GlobalEvent
 import com.ptk.healthflow.util.GlobalEventBus
-import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
     val uiStates by viewModel.uiStates.collectAsState()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
-    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         GlobalEventBus.eventFlow.collect { event ->
@@ -73,10 +77,12 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             }
         }
     }
+    Log.e("testASDF", "uistate : ${uiStates.isLoading}")
+
     if (uiStates.isShowDialog) {
         InfoDialog(
-            title = "Information",
-            message = "This is an informational message for the user.",
+            title = "Data Synced Successfully",
+            message = "Your data has been synchronized successfully. You’re all set!",
             lastSyncTime = uiStates.updateTime,
             heartRate = uiStates.heartRate,
             temperature = uiStates.temperature,
@@ -86,7 +92,29 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             onDismiss = { viewModel.toggleIsShowDialog(false) }
         )
     }
-    HealthScreenContent(drawerState, navController, uiStates)
+    if (uiStates.isShowErrorDialog) {
+        ErrorDialog(
+            title = uiStates.errDialogTitle,
+            message = uiStates.errDialogMessage
+        ) {
+            viewModel.toggleIsShowErrorDialog(false)
+        }
+    }
+    if (uiStates.isLoading) {
+        val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading)) // Replace with your Lottie animation file
+        Box {
+            LottieAnimation(
+                composition = composition,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .fillMaxSize()
+                    .padding(8.dp), // Add padding if needed
+                iterations = LottieConstants.IterateForever
+            )
+        }
+    } else {
+        HealthScreenContent(drawerState, navController, uiStates)
+    }
 }
 
 @Composable

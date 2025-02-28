@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -41,7 +44,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         handleDeepLink(intent)
 
-// Check if permission is granted
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -49,7 +51,6 @@ class MainActivity : ComponentActivity() {
                 )
                 != PackageManager.PERMISSION_GRANTED
             ) {
-                // Request the permission
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
@@ -69,10 +70,8 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun MainFunction(navController: NavHostController, modifier: Modifier = Modifier) {
-        // Track the start destination using a mutableState
         var startDestination by remember { mutableStateOf<String?>(null) }
 
-        // Use LaunchedEffect to set the start destination
         LaunchedEffect(Unit) {
             startDestination = if (healthFlowDataStore.isFirstLaunch.first()) {
                 Screen.OnboardingScreen.route
@@ -87,7 +86,12 @@ class MainActivity : ComponentActivity() {
         if (startDestination != null) {
             AppNavigation(navController = navController, startDestination!!)
         } else {
-            CircularProgressIndicator()
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator()
+            }
         }
 
 

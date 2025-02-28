@@ -1,5 +1,6 @@
 package com.ptk.healthflow.presentation.ui.navigation
 
+import android.content.pm.ActivityInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
