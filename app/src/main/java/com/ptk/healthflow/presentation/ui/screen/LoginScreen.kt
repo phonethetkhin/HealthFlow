@@ -113,10 +113,10 @@ fun LoginScreen(
 fun LoginScreenContent(loginViewModel: LoginViewModel, modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
-            .padding(16.dp),
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
